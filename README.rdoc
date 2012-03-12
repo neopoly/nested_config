@@ -1,0 +1,33 @@
+= neopoly_config
+
+Simple, static, nested application configuration
+
+== Usage
+
+  require 'neopoly/config'
+
+  class MyApp
+    def self.configure
+      yield config
+    end
+
+    def self.config
+      @config ||= Neopoly::Config.new
+    end
+  end
+
+  MyApp.configure do |config|
+    config.coins = 1000
+    config.user do |user|
+      user.max = 5
+    end
+    config.queue do |queue|
+      queue.workers do |workers
+        workers.max = 2
+        workers.timeout = 60.seconds
+      end
+    end
+  end
+
+  MyApp.config.coins # => 1000
+  MyApp.config.queue.workers.timeout # => 60
