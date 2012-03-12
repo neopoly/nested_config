@@ -31,3 +31,14 @@ Simple, static, nested application configuration
 
   MyApp.config.coins # => 1000
   MyApp.config.queue.workers.timeout # => 60
+
+== Installation
+
+  gem install neopoly_config
+
+== Release
+
+  vim lib/neopoly/config.rb
+  # bump VERSION
+  rake build
+  gem inabox
