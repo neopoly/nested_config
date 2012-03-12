@@ -48,5 +48,29 @@ class NeopolyConfigTest < NeopolyConfigSpec
       end
       assert_match /NilClass/, e.message
     end
+
+    context "subclass" do
+      let(:subclassed_config) do
+        Class.new(Neopoly::Config) do
+          def foo?
+            :bar!
+          end
+        end.new
+      end
+
+      test "has foo?" do
+        assert_equal :bar!, subclassed_config.foo?
+      end
+
+      test "nests subclassed config" do
+        c = subclassed_config.tap do |c|
+          c.users do |users|
+            users.max = 23
+          end
+        end
+
+        assert_equal :bar!, c.users.foo?
+      end
+    end
   end
 end

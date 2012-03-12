@@ -20,7 +20,7 @@ module Neopoly
 
     def method_missing(name, *args, &block)
       if block
-        config = self[name] ||= Config.new
+        config = self[name] ||= self.class.new
         yield config
       else
         key = name.to_s.gsub(/=$/, '')
