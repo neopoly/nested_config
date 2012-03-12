@@ -49,6 +49,20 @@ class NeopolyConfigTest < NeopolyConfigSpec
       assert_match /NilClass/, e.message
     end
 
+    test "re-use already defined nested config" do
+      c = config.tap do |c|
+        c.users do |users|
+          users.max = 23
+        end
+        c.users do |users|
+          users.min = 5
+        end
+      end
+
+      assert_equal 23, c.users.max
+      assert_equal 5, c.users.min
+    end
+
     context "subclass" do
       let(:subclassed_config) do
         Class.new(Neopoly::Config) do
