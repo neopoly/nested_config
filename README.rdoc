@@ -36,6 +36,11 @@ Simple, static, nested application configuration
 
   gem install neopoly_config
 
+== Test
+
+  rake test
+  COVERAGE=1 rake test
+
 == Release
 
   vim lib/neopoly/config.rb
