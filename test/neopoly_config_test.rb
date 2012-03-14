@@ -15,6 +15,11 @@ class NeopolyConfigTest < NeopolyConfigSpec
       end
     end
 
+    test "inspect retrives __hash__" do
+      c = config.tap { |c| c.foo = :bar }
+      assert_same c.inspect, c.__hash__
+    end
+
     test "cannot use defined method names as keys" do
       c = config.tap do |c|
         c.object_id = :foo
