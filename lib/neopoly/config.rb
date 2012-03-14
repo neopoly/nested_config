@@ -18,14 +18,14 @@ module Neopoly
       @hash
     end
 
-    def method_missing(name, *args)
+    def method_missing(name, arg=nil)
       if block_given?
         config = self[name] ||= self.class.new
         yield config
       else
         key = name.to_s.gsub(/=$/, '')
-        if $& == '=' # setter
-          self[key] = args.first
+        if $& == '='
+          self[key] = arg
         else
           self[name]
         end
