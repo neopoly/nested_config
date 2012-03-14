@@ -18,8 +18,8 @@ module Neopoly
       @hash
     end
 
-    def method_missing(name, *args, &block)
-      if block
+    def method_missing(name, *args)
+      if block_given?
         config = self[name] ||= self.class.new
         yield config
       else
