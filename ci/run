@@ -16,8 +16,5 @@ export COVERAGE=1
 source "$HOME/.rvm/scripts/rvm"
 . $ROOT_DIR/.rvmrc
 
-# database config
-cp $CI_DIR/database.yml $ROOT_DIR/config
-
 # run
 bundle --without development install && bundle exec rake test
