@@ -32,6 +32,8 @@ Simple, static, nested application configuration
   MyApp.config.coins # => 1000
   MyApp.config.queue.workers.timeout # => 60
 
+*Note*: Neopoly::Config is not a blank slate so you CANNOT use defined method names as keys like +object_id+.
+
 == Installation
 
   gem install neopoly_config

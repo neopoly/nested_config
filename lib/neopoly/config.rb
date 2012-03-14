@@ -18,6 +18,10 @@ module Neopoly
       @hash
     end
 
+    def inspect
+      @hash
+    end
+
     def method_missing(name, arg=nil)
       if block_given?
         config = self[name] ||= self.class.new
@@ -30,6 +34,10 @@ module Neopoly
           self[name]
         end
       end
+    end
+
+    def respond_to?(name, include_private=false)
+      __hash__.key?(name.to_s) || super
     end
   end
 end

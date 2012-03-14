@@ -9,6 +9,21 @@ class NeopolyConfigTest < NeopolyConfigSpec
       assert config.__hash__.empty?
     end
 
+    test "is NOT a blank slate right now" do
+      Object.instance_methods.each do |method|
+        assert config.respond_to?(method)
+      end
+    end
+
+    test "cannot use defined method names as keys" do
+      c = config.tap do |c|
+        c.object_id = :foo
+        c.class     = :bar
+      end
+      refute_equal :foo, c.object_id
+      refute_equal :bar, c.class
+    end
+
     test "sets values" do
       c = config.tap do |c|
         c.foo = :bar
@@ -47,6 +62,14 @@ class NeopolyConfigTest < NeopolyConfigSpec
         c.deep.deeper.key
       end
       assert_match /NilClass/, e.message
+    end
+
+    test "respond_to?" do
+      c = config.tap do |c|
+        c.foo = :bar
+      end
+
+      assert_respond_to c, :foo
     end
 
     test "re-use already defined nested config" do
