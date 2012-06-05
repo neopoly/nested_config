@@ -12,9 +12,14 @@ Simple, static, nested application configuration
     end
 
     def self.config
-      @config ||= Neopoly::Config.new
+      @config ||= MyConfig.new
+    end
+
+    class MyConfig < Neopoly::Config.new
     end
   end
+
+=== Basic
 
   MyApp.configure do |config|
     config.coins = 1000
@@ -31,6 +36,28 @@ Simple, static, nested application configuration
 
   MyApp.config.coins # => 1000
   MyApp.config.queue.workers.timeout # => 60
+
+
+=== EvaluateOnce
+
+With the module +EvaluateOnce+ you can define config value which will be evaluated lazily. Once.
+
+  class MyConfig
+    include Neopoly::Config::EvaluateOnce
+  end
+
+  MyApp.configure do |config|
+    config.country_list = proc { Country.all }
+  end
+
+  MyApp.config.country_list # => [List of countries]
+  MyApp.config.country_list # => [List of countries] (cached)
+
+The initial access to key +country_list+ calls (via +call+ method) the proc and replaces the value.
+Subsequent calls just fetch the replaced value.
+
+
+=== Key names
 
 *Note*: Neopoly::Config is not a blank slate so you CANNOT use defined method names as keys like +object_id+.
 
