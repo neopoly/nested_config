@@ -2,6 +2,8 @@ module Neopoly
   class Config
     VERSION = "0.0.2"
 
+    autoload :EvaluateOnce, 'neopoly/config/evaluate_once'
+
     def initialize
       @hash = {}
     end
@@ -22,16 +24,16 @@ module Neopoly
       @hash
     end
 
-    def method_missing(name, arg=nil)
+    def method_missing(name, *args)
       if block_given?
         config = self[name] ||= self.class.new
         yield config
       else
         key = name.to_s.gsub(/=$/, '')
         if $& == '='
-          __set__(key, arg)
+          __set__(key, args.first)
         else
-          __get__(key)
+          __get__(key, *args)
         end
       end
     end
@@ -48,7 +50,7 @@ module Neopoly
     end
 
     # Get hook
-    def __get__(key)
+    def __get__(key, *args)
       self[key]
     end
   end
