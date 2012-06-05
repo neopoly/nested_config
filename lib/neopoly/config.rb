@@ -29,15 +29,27 @@ module Neopoly
       else
         key = name.to_s.gsub(/=$/, '')
         if $& == '='
-          self[key] = arg
+          __set__(key, arg)
         else
-          self[name]
+          __get__(key)
         end
       end
     end
 
     def respond_to?(name, include_private=false)
       __hash__.key?(name.to_s) || super
+    end
+
+    protected
+
+    # Set hook
+    def __set__(key, arg)
+      self[key] = arg
+    end
+
+    # Get hook
+    def __get__(key)
+      self[key]
     end
   end
 end
