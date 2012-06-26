@@ -1,10 +1,10 @@
-= neopoly_config
+= nested_config
 
 Simple, static, nested application configuration
 
 == Usage
 
-  require 'neopoly/config'
+  require 'nested_config'
 
   class MyApp
     def self.configure
@@ -15,7 +15,7 @@ Simple, static, nested application configuration
       @config ||= MyConfig.new
     end
 
-    class MyConfig < Neopoly::Config.new
+    class MyConfig < NestedConfig.new
     end
   end
 
@@ -27,7 +27,7 @@ Simple, static, nested application configuration
       user.max = 5
     end
     config.queue do |queue|
-      queue.workers do |workers
+      queue.workers do |workers|
         workers.max = 2
         workers.timeout = 60.seconds
       end
@@ -43,7 +43,7 @@ Simple, static, nested application configuration
 With the module +EvaluateOnce+ you can define config value which will be evaluated lazily. Once.
 
   class MyConfig
-    include Neopoly::Config::EvaluateOnce
+    include NestedConfig::EvaluateOnce
   end
 
   MyApp.configure do |config|
@@ -59,11 +59,11 @@ Subsequent calls just fetch the replaced value.
 
 === Key names
 
-*Note*: Neopoly::Config is not a blank slate so you CANNOT use defined method names as keys like +object_id+.
+*Note*: NestedConfig is not a blank slate so you CANNOT use defined method names as keys like +object_id+.
 
 == Installation
 
-  gem install neopoly_config
+  gem install nested_config
 
 == Test
 
@@ -72,7 +72,5 @@ Subsequent calls just fetch the replaced value.
 
 == Release
 
-  vim lib/neopoly/config.rb
-  # bump VERSION
-  rake build
-  gem inabox
+  edit lib/nested_config/version.rb
+  rake release

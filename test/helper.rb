@@ -5,9 +5,9 @@ require 'rubygems'
 require 'minitest/spec'
 require 'minitest/autorun'
 
-require 'neopoly/config'
+require 'nested_config'
 
-class NeopolyConfigSpec < MiniTest::Spec
+class NestedConfigSpec < MiniTest::Spec
   class << self
     alias :test :it
     alias :context :describe

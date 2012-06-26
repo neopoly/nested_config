@@ -1,17 +1,15 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "neopoly_config"
+require "nested_config/version"
 
 Gem::Specification.new do |s|
-  s.name        = "neopoly_config"
-  s.version     = Neopoly::Config::VERSION
+  s.name        = "nested_config"
+  s.version     = NestedConfig::VERSION
   s.authors     = ["Peter Suschlik"]
   s.email       = ["ps@neopoly.de"]
-  s.homepage    = "https://gemdocs.neopoly.com"
+  s.homepage    = "https://github.com/neopoly/nested_config"
   s.summary     = %q{Simple, static, nested config}
   s.description = %q{}
-
-  s.rubyforge_project = "neopoly_config"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

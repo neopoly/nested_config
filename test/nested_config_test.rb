@@ -1,9 +1,9 @@
 require 'helper'
 
-class NeopolyConfigTest < NeopolyConfigSpec
+class NestedConfigTest < NestedConfigSpec
 
   context "basic" do
-    let(:config) { Neopoly::Config.new }
+    let(:config) { NestedConfig.new }
 
     test "empty" do
       assert config.__hash__.empty?
@@ -103,7 +103,7 @@ class NeopolyConfigTest < NeopolyConfigSpec
 
     context "subclass" do
       let(:subclassed_config) do
-        Class.new(Neopoly::Config) do
+        Class.new(NestedConfig) do
           def foo?
             :bar!
           end

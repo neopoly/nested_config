@@ -1,1 +1,1 @@
-rvm 1.9.3@neopoly_config --create
+rvm 1.9.3@nested_config --create
