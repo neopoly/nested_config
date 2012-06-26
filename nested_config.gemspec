@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = NestedConfig::VERSION
   s.authors     = ["Peter Suschlik"]
   s.email       = ["ps@neopoly.de"]
-  s.homepage    = "https://github.com/neopoly/nested_config"
+  s.homepage    = "https://rubygems.org/gems/nested_config"
   s.summary     = %q{Simple, static, nested config}
   s.description = %q{}
 
