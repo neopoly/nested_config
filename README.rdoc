@@ -20,7 +20,7 @@ RDoc[http://rubydoc.info/github/neopoly/nested_config/master/file/README.rdoc] |
       @config ||= MyConfig.new
     end
 
-    class MyConfig < NestedConfig.new
+    class MyConfig < NestedConfig
     end
   end
 
