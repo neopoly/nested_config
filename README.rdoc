@@ -4,7 +4,8 @@ Simple, static, nested application configuration
 
 Gem[https://rubygems.org/gems/nested_config] |
 Source[https://github.com/neopoly/nested_config] |
-RDoc[http://rubydoc.info/github/neopoly/nested_config/master/file/README.rdoc]
+RDoc[http://rubydoc.info/github/neopoly/nested_config/master/file/README.rdoc] |
+{<img src="https://secure.travis-ci.org/neopoly/nested_config.png?branch=master" alt="Build Status" />}[http://travis-ci.org/neopoly/nested_config]
 
 == Usage
 
