@@ -72,6 +72,42 @@ NestedConfig can be cloned:
 
 *Note*: Proc values CANNOT be cloned.
 
+
+=== Modifying config using NestedConfig::WithConfig
+
+Values of NestedConfig can be temporalily modified.
+
+This can be used in tests modifying a global application config inside a block:
+
+  require 'nested_config/with_config'
+
+  class MyCase < MiniTest::TestCase
+    include NestedConfig::WithConfig
+
+    def with_app_config(key, &block)
+      with_config(MyApp.config, key, &block)
+    end
+  end
+
+  class SomeCase < MyCase
+    def setup
+      app_config.tap do |config|
+        config.workers do |workers|
+          workers.max = 5
+        end
+      end
+    end
+
+    def test_with_config
+      with_app_config(:workers) do |workers|
+        workers.max = 1
+        # do stuff with modified config max value
+      end
+      # global config reset to previous config
+    end
+  end
+
+
 === Key names
 
 *Note*: NestedConfig is not a blank slate so you CANNOT use defined method names as keys like +object_id+.
