@@ -19,6 +19,10 @@ class NestedConfig
     @hash
   end
 
+  def __clone__
+    Marshal.load(Marshal.dump(self))
+  end
+
   def inspect
     @hash
   end

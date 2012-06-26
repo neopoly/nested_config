@@ -124,5 +124,34 @@ class NestedConfigTest < NestedConfigSpec
         assert_equal :bar!, c.users.foo?
       end
     end
+
+    context "clone" do
+      let(:config) do
+        NestedConfig.new.tap do |config|
+          config.nest do |nest|
+            nest.level = 1
+            nest.deep do |deep|
+              deep.level = 2
+            end
+          end
+        end
+      end
+
+      test "deep" do
+        clone = config.__clone__
+        clone.nest.level = 23
+        clone.nest.deep.level = 5
+
+        assert_equal 1, config.nest.level
+        assert_equal 2, config.nest.deep.level
+      end
+
+      test "cannot clone procs" do
+        config.proc = proc {}
+        assert_raises TypeError do
+          config.__clone__
+        end
+      end
+    end
   end
 end
