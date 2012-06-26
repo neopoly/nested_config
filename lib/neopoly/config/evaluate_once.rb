@@ -19,10 +19,10 @@ module Neopoly
     #   config.env(:development) # => DEVELOPMENT
     #   config.env               # => DEVELOPMENT
     module EvaluateOnce
-      def __get__(key, *args)
+      def [](key, *args)
         value = super
         if value.respond_to?(:call)
-          __set__(key, value.call(*args))
+          self[key] = value.call(*args)
         else
           value
         end

@@ -58,6 +58,16 @@ class NeopolyConfigTest < NeopolyConfigSpec
       assert_equal :baz, c.deep2.key
     end
 
+    test "sets arrays as value" do
+      c = config.tap do |c|
+        c.ary   = [ :foo, :bar ]
+        c.ary2  = :foo, :bar
+      end
+
+      assert_equal [ :foo, :bar ], c.ary
+      assert_equal [ :foo, :bar ], c.ary2
+    end
+
     test "cannot nest nil" do
       c = config.tap do |c|
         c.key = :foo

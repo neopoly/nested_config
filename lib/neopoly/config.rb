@@ -8,7 +8,7 @@ module Neopoly
       @hash = {}
     end
 
-    def [](name)
+    def [](name, *args)
       @hash[name.to_s]
     end
 
@@ -31,27 +31,15 @@ module Neopoly
       else
         key = name.to_s.gsub(/=$/, '')
         if $& == '='
-          __set__(key, args.first)
+          self[key] = args.first
         else
-          __get__(key, *args)
+          self[key, *args]
         end
       end
     end
 
     def respond_to?(name, include_private=false)
       __hash__.key?(name.to_s) || super
-    end
-
-    protected
-
-    # Set hook
-    def __set__(key, arg)
-      self[key] = arg
-    end
-
-    # Get hook
-    def __get__(key, *args)
-      self[key]
     end
   end
 end
