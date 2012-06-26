@@ -1,5 +1,5 @@
 class NestedConfig
-  # Test helper for modifying config during a block.
+  # Test helper for modifying config inside a block.
   #
   # == Example
   #
