@@ -64,7 +64,7 @@ Subsequent calls just fetch the replaced value.
 
 === Cloning
 
-NestedConfig can be cloned via +__clone__+ method
+NestedConfig can be cloned:
 
   clone = MyApp.config.__clone__
   clone.coins = 2000
