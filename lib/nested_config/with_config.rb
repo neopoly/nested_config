@@ -16,14 +16,24 @@ class NestedConfig
   #   class SomeCase < MyCase
   #     def setup
   #       app_config.tap do |config|
-  #         config.workers do |workers|
-  #           workers.max = 5
+  #         config.coins = 1000
+  #         config.queue do |queue|
+  #           queue.workers do |workers|
+  #             workers.max = 5
+  #           end
   #         end
   #       end
   #     end
   #
-  #     def test_with_config
-  #       with_config(app_config, :workers) do |workers|
+  #     def test_with_basic_value
+  #       with_config(app_config) do |config|
+  #         config.coins = 500
+  #       end
+  #       # global config reset to previous config
+  #     end
+  #
+  #     def test_queue_with_changed_workers
+  #       with_config(app_config, :queue, :workers) do |workers|
   #         workers.max = 1
   #         # do stuff with modified config max value
   #       end
@@ -31,12 +41,18 @@ class NestedConfig
   #     end
   #   end
   module WithConfig
-    def with_config(config, key)
-      current = config[key]
-      backup  = current.__clone__
-      yield current
-    ensure
-      config[key] = backup
+    def with_config(config, *keys, &block)
+      current = config
+      while key = keys.shift
+        current = current[key]
+        unless current
+          raise ArgumentError, "nested key #{key.inspect} not found"
+        end
+      end
+      unless current.respond_to?(:__with_cloned__)
+        raise ArgumentError, "config #{current.inspect} can't be cloned"
+      end
+      current.__with_cloned__(&block)
     end
   end
 end

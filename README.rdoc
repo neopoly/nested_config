@@ -72,22 +72,32 @@ This can be used in tests modifying a global application config inside a block:
   class MyCase < MiniTest::TestCase
     include NestedConfig::WithConfig
 
-    def with_app_config(key, &block)
-      with_config(MyApp.config, key, &block)
+    def app_config
+      MyApp.config # global
     end
   end
 
   class SomeCase < MyCase
     def setup
       app_config.tap do |config|
-        config.workers do |workers|
-          workers.max = 5
+        config.coins = 1000
+        config.queue do |queue|
+          queue.workers do |workers|
+            workers.max = 5
+          end
         end
       end
     end
 
-    def test_with_config
-      with_app_config(:workers) do |workers|
+    def test_with_basic_value
+      with_config(app_config) do |config|
+        config.coins = 500
+      end
+      # global config reset to previous config
+    end
+
+    def test_queue_with_changed_workers
+      with_config(app_config, :queue, :workers) do |workers|
         workers.max = 1
         # do stuff with modified config max value
       end
