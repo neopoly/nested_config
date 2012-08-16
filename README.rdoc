@@ -119,6 +119,10 @@ This can be used in tests modifying a global application config inside a block:
   rake test
   COVERAGE=1 rake test
 
+== TODO
+
+* Make NestedConfig a blank slate
+
 == Release
 
   edit lib/nested_config/version.rb
