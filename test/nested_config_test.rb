@@ -153,5 +153,18 @@ class NestedConfigTest < NestedConfigSpec
         end
       end
     end
+
+    context "replace" do
+      let(:config) do
+        NestedConfig.new
+      end
+
+      test "replace with new raw hash" do
+        config.__replace__ "string" => "value", :symbol => :value, "nested" => { :key => 1 }
+        assert_equal "value", config.string
+        assert_nil config.symbol
+        assert_equal({ :key => 1 }, config.nested)
+      end
+    end
   end
 end

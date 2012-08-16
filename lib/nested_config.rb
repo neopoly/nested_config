@@ -23,6 +23,14 @@ class NestedConfig
     Marshal.load(Marshal.dump(self))
   end
 
+  # Replaces the internal hash with raw +hash+.
+  # This method is useful when restoring hash config.
+  #
+  # See WithConfig
+  def __replace__(hash)
+    @hash = hash
+  end
+
   def inspect
     @hash
   end
