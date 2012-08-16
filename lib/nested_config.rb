@@ -19,16 +19,11 @@ class NestedConfig
     @hash
   end
 
-  def __clone__
-    Marshal.load(Marshal.dump(self))
-  end
-
-  # Replaces the internal hash with raw +hash+.
-  # This method is useful when restoring hash config.
-  #
-  # See WithConfig
-  def __replace__(hash)
-    @hash = hash
+  def __with_cloned__
+    backup = Marshal.load(Marshal.dump(@hash))
+    yield(self)
+  ensure
+    @hash = backup
   end
 
   def inspect

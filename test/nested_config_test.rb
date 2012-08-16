@@ -125,9 +125,10 @@ class NestedConfigTest < NestedConfigSpec
       end
     end
 
-    context "clone" do
+    context "__with_cloned__" do
       let(:config) do
         NestedConfig.new.tap do |config|
+          config.top_level = 1
           config.nest do |nest|
             nest.level = 1
             nest.deep do |deep|
@@ -137,33 +138,20 @@ class NestedConfigTest < NestedConfigSpec
         end
       end
 
-      test "deep" do
-        clone = config.__clone__
-        clone.nest.level = 23
-        clone.nest.deep.level = 5
-
-        assert_equal 1, config.nest.level
-        assert_equal 2, config.nest.deep.level
-      end
-
-      test "cannot clone procs" do
-        config.proc = proc {}
-        assert_raises TypeError do
-          config.__clone__
+      test "top level" do
+        config.__with_cloned__ do |c|
+          c.top_level = 2
+          assert_equal 2, config.top_level
         end
-      end
-    end
-
-    context "replace" do
-      let(:config) do
-        NestedConfig.new
+        assert_equal 1, config.top_level
       end
 
-      test "replace with new raw hash" do
-        config.__replace__ "string" => "value", :symbol => :value, "nested" => { :key => 1 }
-        assert_equal "value", config.string
-        assert_nil config.symbol
-        assert_equal({ :key => 1 }, config.nested)
+      test "nested" do
+        config.__with_cloned__ do |c|
+          c.nest.deep.level = 23
+          assert_equal 23, config.nest.deep.level
+        end
+        assert_equal 2, config.nest.deep.level
       end
     end
   end

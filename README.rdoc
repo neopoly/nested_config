@@ -61,17 +61,6 @@ The initial access to key +country_list+ calls (via +call+ method) the proc and 
 Subsequent calls just fetch the replaced value.
 
 
-=== Cloning
-
-NestedConfig can be cloned:
-
-  clone = MyApp.config.__clone__
-  clone.coins = 2000
-  MyApp.config.conins # => 1000
-
-*Note*: Proc values CANNOT be cloned.
-
-
 === Modifying config using NestedConfig::WithConfig
 
 Values of NestedConfig can be temporalily modified.
