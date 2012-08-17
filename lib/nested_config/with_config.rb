@@ -42,17 +42,24 @@ class NestedConfig
   #   end
   module WithConfig
     def with_config(config, *keys, &block)
-      current = config
-      while key = keys.shift
-        current = current[key]
-        unless current
-          raise ArgumentError, "nested key #{key.inspect} not found"
-        end
+      current = keys.inject(config) do |config, key|
+        config[key] or raise KeyNotFound.new(key, keys)
       end
-      unless current.respond_to?(:__with_cloned__)
-        raise ArgumentError, "config #{current.inspect} can't be cloned"
-      end
+      current.respond_to?(:__with_cloned__) or raise ValueNotCloneable.new(current)
+
       current.__with_cloned__(&block)
+    end
+
+    class KeyNotFound < ArgumentError
+      def initialize(key, keys)
+        super(%{config key "#{key}" in config.#{keys.join(".")} not found})
+      end
+    end
+
+    class ValueNotCloneable < ArgumentError
+      def initialize(value)
+        super(%{config value #{value.inspect} can't be cloned})
+      end
     end
   end
 end

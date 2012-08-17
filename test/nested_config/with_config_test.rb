@@ -57,17 +57,17 @@ class NestedConfigWithConfigTest < NestedConfigSpec
       end
 
       test "key not found raises ArgumentError" do
-        error = assert_raises ArgumentError do
+        error = assert_raises NestedConfig::WithConfig::KeyNotFound do
           with_config(config, :some_key, :not_found) {}
         end
-        assert_match %r{not found}, error.message
+        assert_equal %{config key "some_key" in config.some_key.not_found not found}, error.message
       end
 
       test "can't change basic value" do
-        error = assert_raises ArgumentError do
+        error = assert_raises NestedConfig::WithConfig::ValueNotCloneable do
           with_config(config, :basic) {}
         end
-        assert_match %r{can't be cloned}, error.message
+        assert_equal %{config value 23 can't be cloned}, error.message
       end
     end
   end
