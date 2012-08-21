@@ -52,7 +52,7 @@ class NestedConfig
 
     class KeyNotFound < ArgumentError
       def initialize(key, keys)
-        super(%{config key "#{key}" in config.#{keys.join(".")} not found})
+        super(%{config key "#{key}" in config.#{keys.map(&:to_s).join(".")} not found})
       end
     end
 
