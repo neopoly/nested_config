@@ -117,7 +117,7 @@ This can be used in tests modifying a global application config inside a block:
 == Test
 
   rake test
-  COVERAGE=1 rake test
+  COVERAGE=1 bundle exec rake test
 
 == TODO
 

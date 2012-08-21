@@ -1,8 +1,8 @@
-# simplecov
-require 'simplecov' if ENV['COVERAGE']
-
 require 'rubygems'
 require 'bundler/setup'
+
+require 'simplecov' if ENV['COVERAGE']
+
 require 'minitest/spec'
 require 'minitest/autorun'
 
