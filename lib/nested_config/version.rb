@@ -1,3 +1,3 @@
-class NestedConfig
+class NestedConfig < BasicObject
   VERSION = "0.4.0"
 end

@@ -9,9 +9,9 @@ class NestedConfigTest < NestedConfigSpec
       assert config.__hash__.empty?
     end
 
-    test "is NOT a blank slate right now" do
+    test "is a blank slate" do
       Object.instance_methods.each do |method|
-        assert config.respond_to?(method)
+        refute config.respond_to?(method)
       end
     end
 
@@ -25,8 +25,8 @@ class NestedConfigTest < NestedConfigSpec
         c.object_id = :foo
         c.class     = :bar
       end
-      refute_equal :foo, c.object_id
-      refute_equal :bar, c.class
+      assert_equal :foo, c.object_id
+      assert_equal :bar, c.class
     end
 
     test "sets values" do

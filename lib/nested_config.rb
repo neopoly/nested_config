@@ -20,19 +20,28 @@ class NestedConfig
   end
 
   def __with_cloned__
-    backup = Marshal.load(Marshal.dump(@hash))
-    yield(self)
+    backup = ::Marshal.load(::Marshal.dump(@hash))
+    yield self
   ensure
     @hash = backup
+  end
+
+  def __new__
+    (class << self; self; end).superclass.new
+  end
+
+  def tap
+    yield self
+    self
   end
 
   def inspect
     @hash
   end
 
-  def method_missing(name, *args)
-    if block_given?
-      config = self[name] ||= self.class.new
+  def method_missing(name, *args, &block)
+    if block
+      config = self[name] ||= __new__
       yield config
     else
       key = name.to_s.gsub(/=$/, '')
@@ -44,7 +53,7 @@ class NestedConfig
     end
   end
 
-  def respond_to?(name, include_private=false)
+  def respond_to_missing?(name, include_private=false)
     __hash__.key?(name.to_s) || super
   end
 end
