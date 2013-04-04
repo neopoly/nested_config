@@ -1,6 +1,6 @@
 = nested_config
 
-{<img src="https://secure.travis-ci.org/neopoly/nested_config.png?branch=master" alt="Build Status" />}[http://travis-ci.org/neopoly/nested_config] {<img src="https://badge.fury.io/rb/nested_config.png" alt="Gem Version" />}[http://badge.fury.io/rb/nested_config]
+{<img src="https://secure.travis-ci.org/neopoly/nested_config.png?branch=master" alt="Build Status" />}[http://travis-ci.org/neopoly/nested_config] {<img src="https://badge.fury.io/rb/nested_config.png" alt="Gem Version" />}[http://badge.fury.io/rb/nested_config] {<img src="https://codeclimate.com/github/neopoly/nested_config.png" />}[https://codeclimate.com/github/neopoly/nested_config]
 
 Simple, static, nested application configuration
 
