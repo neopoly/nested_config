@@ -153,6 +153,16 @@ class NestedConfigTest < NestedConfigSpec
         end
         assert_equal 2, config.nest.deep.level
       end
+
+      test "still usable if it's undumpable" do
+        config.undumpable = proc {}
+
+        assert_raises TypeError do
+          config.__with_cloned__ {}
+        end
+
+        assert_equal 1, config.top_level
+      end
     end
   end
 end

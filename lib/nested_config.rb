@@ -23,7 +23,7 @@ class NestedConfig
     backup = Marshal.load(Marshal.dump(@hash))
     yield(self)
   ensure
-    @hash = backup
+    @hash = backup if backup
   end
 
   def inspect
