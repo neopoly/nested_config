@@ -35,6 +35,8 @@ class NestedConfig
       evaluate_nested_config name, &block
     elsif assigment?(name)
       assign_value name, *args
+    elsif predicate?(name)
+      has_value?(name, *args)
     else
       retrieve_value name, *args
     end
@@ -54,6 +56,10 @@ class NestedConfig
     !name.match(/.*=$/).nil?
   end
 
+  def predicate?(name)
+    !name.match(/.*\?/).nil?
+  end
+
   def evaluate_nested_config(scope_name, &scope)
     config = self[scope_name] ||= self.class.new
     scope.call config
@@ -62,6 +68,11 @@ class NestedConfig
   def assign_value(name, *args)
     key = name.to_s.gsub(/=$/, '')
     self[key] = args.first
+  end
+
+  def has_value?(name, *args)
+    key = name.to_s.gsub(/\?$/, '')
+    respond_to? key
   end
 
   def retrieve_value(name, *args)
