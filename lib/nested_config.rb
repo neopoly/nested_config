@@ -66,13 +66,13 @@ class NestedConfig
   end
 
   def assign_value(name, *args)
-    key = name.to_s.gsub(/=$/, '')
-    self[key] = args.first
+    sanitized_name = name.to_s.gsub(/=$/, '')
+    self[sanitized_name] = args.first
   end
 
   def has_value?(name, *args)
-    key = name.to_s.gsub(/\?$/, '')
-    respond_to? key
+    sanitized_name = name.to_s.gsub(/\?$/, '')
+    respond_to? sanitized_name
   end
 
   def retrieve_value(name, *args)
