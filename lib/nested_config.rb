@@ -36,7 +36,7 @@ class NestedConfig
     elsif assigment?(name)
       assign_value name, *args
     elsif predicate?(name)
-      has_value?(name, *args)
+      has_truthy_value?(name, *args)
     else
       retrieve_value name, *args
     end
@@ -70,9 +70,9 @@ class NestedConfig
     self[sanitized_name] = args.first
   end
 
-  def has_value?(name, *args)
+  def has_truthy_value?(name, *args)
     sanitized_name = name.to_s.gsub(/\?$/, '')
-    respond_to? sanitized_name
+    respond_to?(sanitized_name) && !!retrieve_value(sanitized_name, *args)
   end
 
   def retrieve_value(name, *args)
