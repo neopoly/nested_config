@@ -30,21 +30,41 @@ class NestedConfig
     @hash
   end
 
-  def method_missing(name, *args)
-    if block_given?
-      config = self[name] ||= self.class.new
-      yield config
+  def method_missing(name, *args, &block)
+    if nested_config?(&block)
+      evaluate_nested_config name, &block
+    elsif assigment?(name)
+      assign_value name, *args
     else
-      key = name.to_s.gsub(/=$/, '')
-      if $& == '='
-        self[key] = args.first
-      else
-        self[key, *args]
-      end
+      retrieve_value name, *args
     end
   end
 
   def respond_to?(name, include_private=false)
     __hash__.key?(name.to_s) || super
+  end
+
+  private
+
+  def nested_config?(&block)
+    !block.nil?
+  end
+
+  def assigment?(name)
+    !name.match(/.*=$/).nil?
+  end
+
+  def evaluate_nested_config(scope_name, &scope)
+    config = self[scope_name] ||= self.class.new
+    scope.call config
+  end
+
+  def assign_value(name, *args)
+    key = name.to_s.gsub(/=$/, '')
+    self[key] = args.first
+  end
+
+  def retrieve_value(name, *args)
+    self[name, *args]
   end
 end
