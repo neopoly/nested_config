@@ -1,5 +1,37 @@
 require 'nested_config/version'
 
+# Simple, static, nested application configuration.
+#
+# == Example
+#
+#   require 'nested_config'
+#
+#   class MyApp
+#     def self.configure
+#       yield config
+#     end
+#
+#     def self.config
+#       @config ||= MyConfig.new
+#     end
+#
+#     class MyConfig < NestedConfig
+#     end
+#   end
+#
+#   MyApp.configure do |config|
+#     config.coins = 1000
+#     config.user do |user|
+#       user.max = 5
+#     end
+#     config.queue do |queue|
+#       queue.workers do |workers|
+#         workers.max = 2
+#         workers.timeout = 60.seconds
+#       end
+#     end
+#   end
+#
 class NestedConfig
   autoload :EvaluateOnce, 'nested_config/evaluate_once'
 
