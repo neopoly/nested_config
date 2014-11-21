@@ -19,11 +19,8 @@ class NestedConfig
     @hash
   end
 
-  def __with_cloned__
-    backup = Marshal.load(Marshal.dump(@hash))
-    yield(self)
-  ensure
-    @hash = backup if backup
+  def __hash__=(hash)
+    @hash = hash
   end
 
   def method_missing(name, *args)

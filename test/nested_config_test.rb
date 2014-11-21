@@ -15,6 +15,11 @@ class NestedConfigTest < NestedConfigSpec
       end
     end
 
+    test "sets raw __hash__" do
+      config.__hash__ = { "foo" => 23 }
+      assert_equal 23, config.foo
+    end
+
     test "inspect" do
       c = config.tap { |c| c.foo = :bar }
 
@@ -124,46 +129,6 @@ class NestedConfigTest < NestedConfigSpec
         end
 
         assert_equal :bar!, c.users.foo?
-      end
-    end
-
-    context "__with_cloned__" do
-      let(:config) do
-        NestedConfig.new.tap do |config|
-          config.top_level = 1
-          config.nest do |nest|
-            nest.level = 1
-            nest.deep do |deep|
-              deep.level = 2
-            end
-          end
-        end
-      end
-
-      test "top level" do
-        config.__with_cloned__ do |c|
-          c.top_level = 2
-          assert_equal 2, config.top_level
-        end
-        assert_equal 1, config.top_level
-      end
-
-      test "nested" do
-        config.__with_cloned__ do |c|
-          c.nest.deep.level = 23
-          assert_equal 23, config.nest.deep.level
-        end
-        assert_equal 2, config.nest.deep.level
-      end
-
-      test "still usable if it's undumpable" do
-        config.undumpable = proc {}
-
-        assert_raises TypeError do
-          config.__with_cloned__ {}
-        end
-
-        assert_equal 1, config.top_level
       end
     end
   end

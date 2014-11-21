@@ -45,9 +45,12 @@ class NestedConfig
       current = keys.inject(config) do |config, key|
         config[key] or raise KeyNotFound.new(key, keys)
       end
-      current.respond_to?(:__with_cloned__) or raise ValueNotCloneable.new(current)
+      current.respond_to?(:__hash__) or raise ValueNotCloneable.new(current)
 
-      current.__with_cloned__(&block)
+      backup = Marshal.load(Marshal.dump(current.__hash__))
+      yield current
+    ensure
+      current.__hash__ = backup if backup
     end
 
     class KeyNotFound < ArgumentError
