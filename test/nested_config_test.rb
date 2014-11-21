@@ -47,6 +47,17 @@ class NestedConfigTest < NestedConfigSpec
       assert_nil c.unknown
     end
 
+    test "provides predicates for checking truthyness of keys" do
+      c = config.tap do |c|
+        c.foo = :bar
+        c.falsefoo = false
+      end
+
+      assert_equal true, c.foo?
+      assert_equal false, c.falsefoo?
+      assert_equal false, c.bar?
+    end
+
     test "sets deep values" do
       c = config.tap do |c|
         c.deep do |deep|
