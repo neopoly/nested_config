@@ -15,9 +15,11 @@ class NestedConfigTest < NestedConfigSpec
       end
     end
 
-    test "inspect retrives __hash__" do
+    test "inspect" do
       c = config.tap { |c| c.foo = :bar }
-      assert_same c.inspect, c.__hash__
+
+      hash = c.__hash__.inspect
+      assert_match %r{#<NestedConfig:0x[0-9a-z]+ @hash=#{hash}>}, c.inspect
     end
 
     test "cannot use defined method names as keys" do

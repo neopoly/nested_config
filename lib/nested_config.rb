@@ -26,10 +26,6 @@ class NestedConfig
     @hash = backup if backup
   end
 
-  def inspect
-    @hash
-  end
-
   def method_missing(name, *args)
     if block_given?
       config = self[name] ||= self.class.new
