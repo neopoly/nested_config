@@ -44,7 +44,7 @@ class NestedConfig
     end
   end
 
-  def respond_to?(name, include_private=false)
+  def respond_to_missing?(name, include_private=false)
     __hash__.key?(name.to_s) || super
   end
 end

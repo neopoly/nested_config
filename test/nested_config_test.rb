@@ -79,7 +79,7 @@ class NestedConfigTest < NestedConfigSpec
       assert_match /NilClass/, e.message
     end
 
-    test "respond_to?" do
+    test "respond_to_missing?" do
       c = config.tap do |c|
         c.foo = :bar
       end
