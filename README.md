@@ -1,20 +1,23 @@
+[github]: https://github.com/neopoly/nested_config
+[doc]: http://rubydoc.info/github/neopoly/nested_config/master/file/README.md
+[gem]: https://rubygems.org/gems/nested_config
+[travis]: https://travis-ci.org/neopoly/nested_config
+[codeclimate]: https://codeclimate.com/github/neopoly/nested_config
+[inchpages]: https://inch-ci.org/github/neopoly/nested_config
+
 # nested_config
 
-[<img src="http://img.shields.io/travis/neopoly/nested_config.svg" alt="Build
-Status" />](http://travis-ci.org/neopoly/nested_config) [<img
-src="http://img.shields.io/gem/v/nested_config.svg" alt="Gem Version"
-/>](http://rubygems.org/gems/nested_config) [<img
-src="http://img.shields.io/codeclimate/github/neopoly/nested_config.svg"
-/>](https://codeclimate.com/github/neopoly/nested_config) [<img
-src="http://inch-ci.org/github/neopoly/nested_config.svg?branch=master"
-alt="Inline docs" />](http://inch-ci.org/github/neopoly/nested_config)
+[![Travis](https://img.shields.io/travis/neopoly/nested_config.svg?branch=master)][travis]
+[![Gem Version](https://img.shields.io/gem/v/nested_config.svg)][gem]
+[![Code Climate](https://img.shields.io/codeclimate/github/neopoly/nested_config.svg)][codeclimate]
+[![Test Coverage](https://codeclimate.com/github/neopoly/nested_config/badges/coverage.svg)][codeclimate]
+[![Inline docs](https://inch-ci.org/github/neopoly/nested_config.svg?branch=master&style=flat)][inchpages]
+
+[Gem][gem] |
+[Source][github] |
+[Documentation][doc]
 
 Simple, static, nested application configuration
-
-[Gem](https://rubygems.org/gems/nested_config) |
-[Source](https://github.com/neopoly/nested_config) |
-[Documentation](http://rubydoc.info/github/neopoly/nested_config/master/file/R
-EADME.rdoc)
 
 ## Usage
 
