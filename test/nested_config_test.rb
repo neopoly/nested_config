@@ -21,25 +21,25 @@ class NestedConfigTest < NestedConfigSpec
     end
 
     test "inspect" do
-      c = config.tap { |c| c.foo = :bar }
+      c = config.tap { |config| config.foo = :bar }
 
       hash = c.__hash__.inspect
       assert_match %r{#<NestedConfig:0x[0-9a-z]+ @hash=#{hash}>}, c.inspect
     end
 
     test "cannot use defined method names as keys" do
-      c = config.tap do |c|
-        c.object_id = :foo
-        c.class     = :bar
+      c = config.tap do |config|
+        config.object_id = :foo
+        config.class     = :bar
       end
       refute_equal :foo, c.object_id
       refute_equal :bar, c.class
     end
 
     test "sets values" do
-      c = config.tap do |c|
-        c.foo = :bar
-        c.bar = :baz
+      c = config.tap do |config|
+        config.foo = :bar
+        config.bar = :baz
       end
 
       assert_equal :bar, c.foo
@@ -48,14 +48,14 @@ class NestedConfigTest < NestedConfigSpec
     end
 
     test "sets deep values" do
-      c = config.tap do |c|
-        c.deep do |deep|
+      c = config.tap do |config|
+        config.deep do |deep|
           deep.key = :foo
           deep.deeper do |deeper|
             deeper.key = :bar
           end
         end
-        c.deep2 do |deep2|
+        config.deep2 do |deep2|
           deep2.key = :baz
         end
       end
@@ -66,9 +66,9 @@ class NestedConfigTest < NestedConfigSpec
     end
 
     test "sets arrays as value" do
-      c = config.tap do |c|
-        c.ary   = [ :foo, :bar ]
-        c.ary2  = :foo, :bar
+      c = config.tap do |config|
+        config.ary   = [ :foo, :bar ]
+        config.ary2  = :foo, :bar
       end
 
       assert_equal [ :foo, :bar ], c.ary
@@ -76,12 +76,12 @@ class NestedConfigTest < NestedConfigSpec
     end
 
     test "sets nested values via []" do
-      c = config.tap do |c|
-        c._ "special key" do |o|
+      c = config.tap do |config|
+        config._ "special key" do |o|
           o.key = "special"
         end
 
-        c._ "special key" do |o|
+        config._ "special key" do |o|
           o.key2 = "again"
         end
       end
@@ -96,30 +96,30 @@ class NestedConfigTest < NestedConfigSpec
     end
 
     test "cannot nest nil" do
-      c = config.tap do |c|
-        c.key = :foo
+      c = config.tap do |config|
+        config.key = :foo
       end
 
       e = assert_raises NoMethodError do
         c.deep.deeper.key
       end
-      assert_match /NilClass/, e.message
+      assert_match(/NilClass/, e.message)
     end
 
     test "respond_to_missing?" do
-      c = config.tap do |c|
-        c.foo = :bar
+      c = config.tap do |config|
+        config.foo = :bar
       end
 
       assert_respond_to c, :foo
     end
 
     test "re-use already defined nested config" do
-      c = config.tap do |c|
-        c.users do |users|
+      c = config.tap do |config|
+        config.users do |users|
           users.max = 23
         end
-        c.users do |users|
+        config.users do |users|
           users.min = 5
         end
       end
@@ -142,8 +142,8 @@ class NestedConfigTest < NestedConfigSpec
       end
 
       test "nests subclassed config" do
-        c = subclassed_config.tap do |c|
-          c.users do |users|
+        c = subclassed_config.tap do |config|
+          config.users do |users|
             users.max = 23
           end
         end

@@ -42,8 +42,8 @@ class NestedConfig
   #   end
   module WithConfig
     def with_config(config, *keys, &block)
-      current = keys.inject(config) do |config, key|
-        config[key] or raise KeyNotFound.new(key, keys)
+      current = keys.inject(config) do |acc, key|
+        acc[key] or raise KeyNotFound.new(key, keys)
       end
       current.respond_to?(:__hash__) or raise ValueNotCloneable.new(current)
 
