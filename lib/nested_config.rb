@@ -55,10 +55,26 @@ class NestedConfig
     @hash = hash
   end
 
+  # Define a config with special names
+  #
+  # Example:
+  #   config = NestedConfig.new.tap do |config|
+  #     config._ "mix & match" do |mix_and_match|
+  #       mix_and_match.name = "Mix & match"
+  #       # ...
+  #     end
+  #   end
+  #
+  #   config["mix & match"].name # => Mix & match
+  def _(name)
+    raise ArgumentError, "provide missing block" unless block_given?
+    config = self[name] ||= self.class.new
+    yield config
+  end
+
   def method_missing(name, *args)
     if block_given?
-      config = self[name] ||= self.class.new
-      yield config
+      _(name, &Proc.new)
     else
       key = name.to_s.gsub(/=$/, '')
       if $& == '='

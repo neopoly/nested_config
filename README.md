@@ -58,6 +58,22 @@ MyApp.config.coins # => 1000
 MyApp.config.queue.workers.timeout # => 60
 ```
 
+### Special config keys
+
+Sometimes you need to define config keys which contains spaces, dashes or other special chars.
+In those case you can use `NestedConfig#_`:
+
+```ruby
+config = NestedConfig.new.tap do |config|
+  config._ "mix & match" do |mix_and_match|
+    mix_and_match.name = "Mix & match"
+    # ...
+  end
+end
+
+config["mix & match"].name # => Mix & match
+```
+
 ### EvaluateOnce
 
 With the module `EvaluateOnce` you can define config value which will be

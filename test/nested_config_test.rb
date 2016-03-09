@@ -75,6 +75,26 @@ class NestedConfigTest < NestedConfigSpec
       assert_equal [ :foo, :bar ], c.ary2
     end
 
+    test "sets nested values via []" do
+      c = config.tap do |c|
+        c._ "special key" do |o|
+          o.key = "special"
+        end
+
+        c._ "special key" do |o|
+          o.key2 = "again"
+        end
+      end
+
+      assert_equal "special", c["special key"].key
+      assert_equal "again", c["special key"].key2
+
+      e = assert_raises ArgumentError do
+        c._ "special key"
+      end
+      assert_equal "provide missing block", e.message
+    end
+
     test "cannot nest nil" do
       c = config.tap do |c|
         c.key = :foo
