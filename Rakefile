@@ -8,7 +8,7 @@ require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.test_files = FileList.new('test/**/*_test.rb')
   test.libs << 'test'
-  test.verbose = true
+  test.warning = true
 end
 
 # RDoc
