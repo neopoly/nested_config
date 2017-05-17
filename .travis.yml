@@ -1,25 +1,26 @@
 language: ruby
 sudo: false
 cache: bundler
+after_success:
+  - '[ "${TRAVIS_JOB_NUMBER#*.}" = "1" ] && bundle exec codeclimate-test-reporter'
 rvm:
-  - ruby-head
+  - 2.4
+  - 2.3
   - 2.2
   - 2.1
   - 2.0
   - 1.9.3
-  - jruby
-  - jruby-head
-  - rbx-2
+  - jruby-9.1.8.0
+  - ruby-head
 env:
   global:
     - CODECLIMATE_REPO_TOKEN=a682282424953217391072dbe4c6b0f793a6c40312a182bc1eb3e26337dbf0f1
     - JRUBY_OPTS='--dev -J-Xmx1024M'
+    - COVERAGE='true'
 matrix:
   fast_finish: true
   allow_failures:
     - rvm: ruby-head
-    - rvm: jruby
-    - rvm: jruby-head
 notifications:
   webhooks:
     urls:
