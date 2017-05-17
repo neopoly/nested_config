@@ -164,5 +164,6 @@ names as keys like `object_id`.
 ## Release
 
     edit lib/nested_config/version.rb
+    git commit -am "Release X.Y.Z"
     rake release
 
