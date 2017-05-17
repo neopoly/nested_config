@@ -76,8 +76,10 @@ class NestedConfig
     if block_given?
       _(name, &Proc.new)
     else
-      key = name.to_s.gsub(/=$/, '')
-      if $& == '='
+      key = name.to_s
+      index = key.rindex('='.freeze)
+      if index
+        key = key[0, index]
         self[key] = args.first
       else
         self[key, *args]
