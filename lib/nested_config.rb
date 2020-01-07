@@ -72,9 +72,9 @@ class NestedConfig
     yield config
   end
 
-  def method_missing(name, *args)
+  def method_missing(name, *args, &block)
     if block_given?
-      _(name, &Proc.new)
+      _(name, &block)
     else
       key = name.to_s
       index = key.rindex('='.freeze)
